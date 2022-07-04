@@ -6,7 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.locators.RelativeLocator;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 import org.testng.annotations.*;
+
+import java.util.List;
 
 public class RelativeLocators {
 
@@ -30,6 +33,15 @@ public class RelativeLocators {
         WebElement loginPanel = driver.findElement(By.id("logInPanelHeading"));
         WebElement credentials = driver.findElement(RelativeLocator.with(By.tagName("span")).above(loginPanel));
         System.out.println(credentials.getText());
-        //7:29 in the video
+    }
+
+    @Test
+    public void testListOfElements(){
+        List<WebElement> allSocialMedia = driver.findElements(with(
+                By.tagName("img"))
+                .near(By.id("footer")));
+        for (WebElement socialMedia : allSocialMedia){
+            System.out.println(socialMedia.getAttribute("alt"));
+        }
     }
 }
