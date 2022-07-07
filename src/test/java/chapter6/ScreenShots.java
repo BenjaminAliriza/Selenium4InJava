@@ -1,10 +1,9 @@
 package chapter6;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
 import org.testng.annotations.BeforeMethod;
@@ -19,8 +18,8 @@ public class ScreenShots {
 
     @BeforeMethod
     public void setUp(){
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://applitools.com/");
     }
@@ -32,5 +31,20 @@ public class ScreenShots {
         File destination = new File("Next Generation Platform.png");
         FileHandler.copy(source, destination);
     }
+
+    @Test
+    public void takeWebElementPageSectionScreenshot() throws IOException {
+        WebElement applitoolsPageSection = driver.findElement(By.cssSelector("#post-8>header"));
+        File source = applitoolsPageSection.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(source, new File("Applitools Page Section.png"));
+    }
+
+    @Test
+    public void takeFullPageScreenshot() throws IOException {
+        File source = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(source, new File("Full page screenshot.png.png"));
+    }
+
+
 
 }
