@@ -4,15 +4,15 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
 
-public class ScreenShots {
+public class Screenshots {
 
     WebDriver driver;
 
@@ -22,6 +22,11 @@ public class ScreenShots {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://applitools.com/");
+    }
+
+    @AfterMethod
+    public void tearDown(){
+        driver.quit();
     }
     
     @Test
